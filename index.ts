@@ -7,7 +7,7 @@ const arr = ["1231", "12234234", "123444"];
  * 
  * @return {string} 公共头部
  */
-function findCommon(targetArr: Array<string>): string {
+function findCommon(targetArr: string[]): string {
     let common = '';
     for (let j = 0; j < targetArr[0].length; j++) {
         for (let i = 1; i < targetArr.length; i++) {
@@ -32,32 +32,32 @@ const data = [
     { id: 5, parentId: 4, label: "2" },
 ];
 
-// interface sourceItem {
+// interface SourceItem {
 //     id: number,
 //     parentId: number | null,
-//     children?: Array<sourceItem>
+//     children?: SourceItem<T>[]
 // }
 
 // 泛型定义
-type sourceItem<T> = {
+type SourceItem<T> = {
     id: T,
     parentId: T | null,
-    children?: Array<sourceItem<T>>
+    children?: SourceItem<T>[]
 }
-type item = sourceItem<number>
+type Item = SourceItem<number>
 
 /**
  * @desc 将扁平数组处理成树形结构
  * @param {Array(object)} sourceData 源数组
  * 
- * @return {Object | null} 树形结构数据
+ * @return {Object | undefined} 树形结构数据
  */
-function convert2Tree(sourceData: Array<item>): (null | item) {
+function convert2Tree(sourceData: Item[]): (undefined | Item) {
     // 期望：这里使用loadsh cloneDeep 深拷贝 sourceData，以避免污染源数据
     // const __sourceData =  cloneDeep(sourceData);
 
     // 方便寻找父节点
-    const parentIdMap: Map<number, item> = new Map();
+    const parentIdMap: Map<number, Item> = new Map();
     // 记录根节点id
     let rootId: number | undefined;
     // 赋值到parentIdMap 和 rootId
@@ -67,19 +67,18 @@ function convert2Tree(sourceData: Array<item>): (null | item) {
     })
     // 遍历目标数据 对parentIdMap进行children的添加
     sourceData.forEach(item => {
-        const parent: undefined | item = parentIdMap.get(<number>item.parentId)
+        const parent: undefined | Item = parentIdMap.get(<number>item.parentId)
         if (parent) {
             parent.children = !parent.children ? [] : parent.children
             parent.children.push(item);
         }
     });
-
-    return rootId === undefined ? null : parentIdMap.get(rootId) || null;
+    return rootId === undefined ? undefined : parentIdMap.get(rootId);
 
 }
 
 // function check<T>(data: T): void { }
 
-// check<item>({ id: 1, parentId: 1, children: [{ id: 1, parentId: 1, children: [] }] })
+// check<Item>({ id: 1, parentId: 1, children: [{ id: 1, parentId: 1, children: [] }] })
 
 console.log("-----第二题答案-----\n", JSON.stringify(convert2Tree(data), null, 2))

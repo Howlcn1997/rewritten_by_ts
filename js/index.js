@@ -33,7 +33,7 @@ var data = [
  * @desc 将扁平数组处理成树形结构
  * @param {Array(object)} sourceData 源数组
  *
- * @return {Object | null} 树形结构数据
+ * @return {Object | undefined} 树形结构数据
  */
 function convert2Tree(sourceData) {
     // 期望：这里使用loadsh cloneDeep 深拷贝 sourceData，以避免污染源数据
@@ -57,8 +57,8 @@ function convert2Tree(sourceData) {
             parent.children.push(item);
         }
     });
-    return rootId === undefined ? null : parentIdMap.get(rootId) || null;
+    return rootId === undefined ? undefined : parentIdMap.get(rootId);
 }
 // function check<T>(data: T): void { }
-// check<item>({ id: 1, parentId: 1, children: [{ id: 1, parentId: 1, children: [] }] })
+// check<Item>({ id: 1, parentId: 1, children: [{ id: 1, parentId: 1, children: [] }] })
 console.log("-----第二题答案-----\n", JSON.stringify(convert2Tree(data), null, 2));
