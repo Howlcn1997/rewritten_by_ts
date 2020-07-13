@@ -59,4 +59,6 @@ function convert2Tree(sourceData) {
     });
     return rootId === undefined ? null : parentIdMap.get(rootId) || null;
 }
+// function check<T>(data: T): void { }
+// check<item>({ id: 1, parentId: 1, children: [{ id: 1, parentId: 1, children: [] }] })
 console.log("-----第二题答案-----\n", JSON.stringify(convert2Tree(data), null, 2));
