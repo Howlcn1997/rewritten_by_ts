@@ -2,6 +2,7 @@
 const arr = ["1231", "12234234", "123444"];
 
 /**
+ * @desc 找出数组元素间，最大公共头部
  * @param {Array<string>} targetArr 公共头部源数组
  * 
  * @return {string} 公共头部
@@ -34,25 +35,28 @@ const data = [
 interface sourceItem {
     id: number,
     parentId: number | null,
-    children?: Array<sourceItem> | []
+    children?: Array<sourceItem>
 }
 /**
  * @desc 将扁平数组处理成树形结构
  * @param {Array(object)} sourceData 源数组
  * 
- * @return 树形结构数据
+ * @return {Object | null} 树形结构数据
  */
-function convert2Tree(sourceData: Array<sourceItem>): (object | sourceItem) {
+function convert2Tree(sourceData: Array<sourceItem>): (null | sourceItem) {
+    // 期望：这里使用loadsh cloneDeep 深拷贝 sourceData，以避免污染源数据
+    // const __sourceData =  cloneDeep(sourceData);
+
     // 方便寻找父节点
     const parentIdMap: Map<number, sourceItem> = new Map();
     // 记录根节点id
     let rootId: number | undefined;
-    // 赋值到fake 和 rootId
+    // 赋值到parentIdMap 和 rootId
     sourceData.forEach(it => {
         parentIdMap.set(it.id, it);
         if (it.parentId === null) { rootId = it.id }
     })
-    // 遍历目标数据 对fake进行chiildren的添加
+    // 遍历目标数据 对parentIdMap进行children的添加
     sourceData.forEach(item => {
         const parent: undefined | sourceItem = parentIdMap.get(<number>item.parentId)
         if (parent) {
@@ -61,8 +65,7 @@ function convert2Tree(sourceData: Array<sourceItem>): (object | sourceItem) {
         }
     });
 
-    return rootId === undefined ? {} : parentIdMap.get(rootId) || {};
+    return rootId === undefined ? null : parentIdMap.get(rootId) || null;
 
 }
-
 console.log("-----第二题答案-----\n", JSON.stringify(convert2Tree(data), null, 2))
