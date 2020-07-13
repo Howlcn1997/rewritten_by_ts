@@ -9,13 +9,13 @@ const arr = ["1231", "12234234", "123444"];
  */
 function findCommon(targetArr: Array<string>): string {
     let common = '';
-    for (let j = 0; j < arr[0].length; j++) {
-        for (let i = 1; i < arr.length; i++) {
-            if (arr[i][j] != arr[0][j]) {
+    for (let j = 0; j < targetArr[0].length; j++) {
+        for (let i = 1; i < targetArr.length; i++) {
+            if (targetArr[i][j] != targetArr[0][j]) {
                 return common
             }
         }
-        common = common + arr[0][j];
+        common = common + targetArr[0][j];
     }
     return common;
 };

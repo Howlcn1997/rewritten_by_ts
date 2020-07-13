@@ -9,13 +9,13 @@ var arr = ["1231", "12234234", "123444"];
  */
 function findCommon(targetArr) {
     var common = '';
-    for (var j = 0; j < arr[0].length; j++) {
-        for (var i = 1; i < arr.length; i++) {
-            if (arr[i][j] != arr[0][j]) {
+    for (var j = 0; j < targetArr[0].length; j++) {
+        for (var i = 1; i < targetArr.length; i++) {
+            if (targetArr[i][j] != targetArr[0][j]) {
                 return common;
             }
         }
-        common = common + arr[0][j];
+        common = common + targetArr[0][j];
     }
     return common;
 }
